@@ -55,7 +55,7 @@ public class VentanaPrincipal extends JFrame {
     private final ProductoDAO productoDAO;
 
     // Formateador de moneda para Paraguay (Guaraníes - Gs.)
-    private final DecimalFormat df = new DecimalFormat("Gs. #,##0");
+    private final DecimalFormat df = new DecimalFormat("'Gs.' #,##0");
 
     public VentanaPrincipal() {
         productoDAO = new ProductoDAO();
