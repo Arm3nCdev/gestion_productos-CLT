@@ -11,14 +11,9 @@ CREATE TABLE IF NOT EXISTS productos (
     codigo VARCHAR(50) NOT NULL UNIQUE,
     nombre VARCHAR(100) NOT NULL,
     categoria VARCHAR(50) NOT NULL,
-    precio DECIMAL(10,2) NOT NULL,
+    precio DECIMAL(12,0) NOT NULL,
     stock INT NOT NULL DEFAULT 0,
     estado VARCHAR(20) NOT NULL DEFAULT 'Activo'
 );
 
--- Datos de prueba iniciales
-INSERT INTO productos (codigo, nombre, categoria, precio, stock, estado) VALUES
-('PROD001', 'Laptop Lenovo IdeaPad', 'Electrónica', 650.00, 10, 'Activo'),
-('PROD002', 'Mouse Inalámbrico Logitech', 'Electrónica', 25.50, 3, 'Activo'),
-('PROD003', 'Teclado Mecánico RGB', 'Electrónica', 75.00, 2, 'Activo'),
-('PROD004', 'Silla Ergonómica Oficina', 'Hogar', 180.00, 8, 'Inactivo');
+-- La tabla inicia vacía para que el usuario pueda insertar sus propios productos

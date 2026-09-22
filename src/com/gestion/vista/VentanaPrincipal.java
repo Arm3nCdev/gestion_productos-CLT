@@ -14,8 +14,8 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 /**
- * Pantalla Principal de la Aplicacion "Gestion de Productos".
- * Desarrollada en Java Swing para la prueba tecnica de Desarrollador Java Jr.
+ * Pantalla Principal de la Aplicación "Gestión de productos".
+ * Desarrollada en Java Swing para la prueba técnica de Desarrollador Java Jr.
  */
 public class VentanaPrincipal extends JFrame {
 
@@ -33,7 +33,7 @@ public class VentanaPrincipal extends JFrame {
     private JButton btnGuardar;
     private JButton btnEliminar;
 
-    // Componentes de Busqueda y Filtros
+    // Componentes de Búsqueda y Filtros
     private JTextField txtBuscar;
     private JButton btnBuscar;
     private JButton btnLimpiarBusqueda;
@@ -48,14 +48,14 @@ public class VentanaPrincipal extends JFrame {
     private JButton btnRestarStock;
     private JButton btnAjustarStockManual;
 
-    // Etiqueta de Estado de la aplicacion
+    // Etiqueta de Estado de la aplicación
     private JLabel lblEstadoMensaje;
 
     // Objeto DAO para persistencia
     private final ProductoDAO productoDAO;
 
-    // Formateador de moneda
-    private final DecimalFormat df = new DecimalFormat("$#,##0.00");
+    // Formateador de moneda para Paraguay (Guaraníes - Gs.)
+    private final DecimalFormat df = new DecimalFormat("Gs. #,##0");
 
     public VentanaPrincipal() {
         productoDAO = new ProductoDAO();
@@ -64,7 +64,7 @@ public class VentanaPrincipal extends JFrame {
     }
 
     private void initComponents() {
-        setTitle("Gestión de Productos - Control de Inventario");
+        setTitle("Gestión de productos - Control de Inventario");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(1050, 680);
         setLocationRelativeTo(null);
@@ -75,12 +75,12 @@ public class VentanaPrincipal extends JFrame {
         mainPanel.setBorder(new EmptyBorder(12, 12, 12, 12));
         setContentPane(mainPanel);
 
-        // Header Panel (Titulo superior)
+        // Header Panel (Título superior)
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(new Color(33, 43, 54));
         headerPanel.setBorder(new EmptyBorder(12, 15, 12, 15));
 
-        JLabel lblTitulo = new JLabel("GESTIÓN DE PRODUCTOS");
+        JLabel lblTitulo = new JLabel("Gestión de productos");
         lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 20));
         lblTitulo.setForeground(Color.WHITE);
         headerPanel.add(lblTitulo, BorderLayout.WEST);
@@ -92,13 +92,13 @@ public class VentanaPrincipal extends JFrame {
 
         mainPanel.add(headerPanel, BorderLayout.NORTH);
 
-        // Split Pane central (Formulario a la izquierda, Tabla a la derecha)
+        // Formulario a la izquierda, Tabla a la derecha
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, crearPanelFormulario(), crearPanelTabla());
         splitPane.setDividerLocation(360);
         splitPane.setResizeWeight(0.35);
         mainPanel.add(splitPane, BorderLayout.CENTER);
 
-        // Bar de Estado inferior
+        // Barra de Estado inferior
         JPanel footerPanel = new JPanel(new BorderLayout());
         footerPanel.setBorder(new EmptyBorder(4, 8, 4, 8));
 
@@ -116,7 +116,7 @@ public class VentanaPrincipal extends JFrame {
     private JPanel crearPanelFormulario() {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), " Datos del Producto ",
+                BorderFactory.createEtchedBorder(), " Datos del producto ",
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
                 new Font("Segoe UI", Font.BOLD, 14), new Color(33, 43, 54)
         ));
@@ -140,14 +140,14 @@ public class VentanaPrincipal extends JFrame {
         cbCategoria = new JComboBox<>(categorias);
 
         txtPrecio = new JTextField(15);
-        spStock = new JSpinner(new SpinnerNumberModel(0, 0, 99999, 1));
+        spStock = new JSpinner(new SpinnerNumberModel(0, 0, 999999, 1));
 
         String[] estados = {"Activo", "Inactivo"};
         cbEstado = new JComboBox<>(estados);
 
-        // Fila 0: Codigo
+        // Fila 0: Código (numérico)
         gbc.gridx = 0; gbc.gridy = 0; gbc.weightx = 0.3;
-        formFields.add(new JLabel("Código: *"), gbc);
+        formFields.add(new JLabel("Código (numérico): *"), gbc);
         gbc.gridx = 1; gbc.weightx = 0.7;
         formFields.add(txtCodigo, gbc);
 
@@ -157,15 +157,15 @@ public class VentanaPrincipal extends JFrame {
         gbc.gridx = 1; gbc.weightx = 0.7;
         formFields.add(txtNombre, gbc);
 
-        // Fila 2: Categoria
+        // Fila 2: Categoría
         gbc.gridx = 0; gbc.gridy = 2; gbc.weightx = 0.3;
         formFields.add(new JLabel("Categoría:"), gbc);
         gbc.gridx = 1; gbc.weightx = 0.7;
         formFields.add(cbCategoria, gbc);
 
-        // Fila 3: Precio
+        // Fila 3: Precio en Guaraníes (Gs.)
         gbc.gridx = 0; gbc.gridy = 3; gbc.weightx = 0.3;
-        formFields.add(new JLabel("Precio ($): *"), gbc);
+        formFields.add(new JLabel("Precio (Gs.): *"), gbc);
         gbc.gridx = 1; gbc.weightx = 0.7;
         formFields.add(txtPrecio, gbc);
 
@@ -214,17 +214,17 @@ public class VentanaPrincipal extends JFrame {
     }
 
     /**
-     * Panel derecho: Busqueda, Tabla de listado de productos y Ajustes de Stock.
+     * Panel derecho: Búsqueda, Tabla de listado de productos y Ajustes de Stock.
      */
     private JPanel crearPanelTabla() {
         JPanel panel = new JPanel(new BorderLayout(8, 8));
         panel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), " Listado de Productos ",
+                BorderFactory.createEtchedBorder(), " Listado de productos ",
                 TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
                 new Font("Segoe UI", Font.BOLD, 14), new Color(33, 43, 54)
         ));
 
-        // Panel Superior de Busqueda y Filtros
+        // Panel Superior de Búsqueda y Filtros
         JPanel searchPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 6));
 
         searchPanel.add(new JLabel("Buscar:"));
@@ -235,13 +235,13 @@ public class VentanaPrincipal extends JFrame {
         btnBuscar = new JButton("Buscar");
         btnBuscar.addActionListener(e -> buscarProductos());
 
-        btnLimpiarBusqueda = new JButton("Ver Todos");
+        btnLimpiarBusqueda = new JButton("Ver todos");
         btnLimpiarBusqueda.addActionListener(e -> {
             txtBuscar.setText("");
             cargarDatosTabla();
         });
 
-        btnBajoStock = new JButton("Bajo Stock (< 5)");
+        btnBajoStock = new JButton("Bajo stock (< 5)");
         btnBajoStock.setToolTipText("Mostrar únicamente productos con stock menor a 5 unidades");
         btnBajoStock.setBackground(new Color(255, 193, 7));
         btnBajoStock.setFont(new Font("Segoe UI", Font.BOLD, 11));
@@ -255,7 +255,7 @@ public class VentanaPrincipal extends JFrame {
         panel.add(searchPanel, BorderLayout.NORTH);
 
         // Tabla de Productos
-        String[] columnas = {"ID", "Código", "Nombre", "Categoría", "Precio", "Stock", "Estado"};
+        String[] columnas = {"ID", "Código", "Nombre", "Categoría", "Precio (Gs.)", "Stock", "Estado"};
         modeloTabla = new DefaultTableModel(columnas, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -270,7 +270,7 @@ public class VentanaPrincipal extends JFrame {
         tblProductos.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
         tblProductos.getTableHeader().setBackground(new Color(230, 235, 245));
 
-        // Alineacion y formato de celdas
+        // Alineación y formato de celdas
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
         rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
         tblProductos.getColumnModel().getColumn(4).setCellRenderer(rightRenderer); // Precio
@@ -278,7 +278,7 @@ public class VentanaPrincipal extends JFrame {
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         tblProductos.getColumnModel().getColumn(0).setCellRenderer(centerRenderer); // ID
-        tblProductos.getColumnModel().getColumn(1).setCellRenderer(centerRenderer); // Codigo
+        tblProductos.getColumnModel().getColumn(1).setCellRenderer(centerRenderer); // Código
         tblProductos.getColumnModel().getColumn(5).setCellRenderer(centerRenderer); // Stock
         tblProductos.getColumnModel().getColumn(6).setCellRenderer(centerRenderer); // Estado
 
@@ -292,7 +292,7 @@ public class VentanaPrincipal extends JFrame {
         JScrollPane scrollPane = new JScrollPane(tblProductos);
         panel.add(scrollPane, BorderLayout.CENTER);
 
-        // Panel Inferior: Controles rapidos de Ajuste de Stock
+        // Panel Inferior: Controles rápidos de Ajuste de Stock
         JPanel stockControlsPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 8, 6));
         stockControlsPanel.add(new JLabel("Ajuste rápido de stock:"));
 
@@ -304,7 +304,7 @@ public class VentanaPrincipal extends JFrame {
         btnRestarStock.setToolTipText("Restar 1 unidad al producto seleccionado");
         btnRestarStock.addActionListener(e -> modificarStockRapido(-1));
 
-        btnAjustarStockManual = new JButton("Ajustar Cantidad...");
+        btnAjustarStockManual = new JButton("Ajustar cantidad...");
         btnAjustarStockManual.setToolTipText("Establecer un valor de stock específico");
         btnAjustarStockManual.addActionListener(e -> abrirDialogoAjustarStock());
 
@@ -324,7 +324,11 @@ public class VentanaPrincipal extends JFrame {
         try {
             List<Producto> productos = productoDAO.listarTodos();
             actualizarTabla(productos);
-            mostrarMensajeEstado("Se cargaron " + productos.size() + " productos.");
+            if (productos.isEmpty()) {
+                mostrarMensajeEstado("No hay productos registrados. Utilice el formulario para registrar su primer producto.");
+            } else {
+                mostrarMensajeEstado("Se cargaron " + productos.size() + " productos.");
+            }
         } catch (SQLException e) {
             mostrarError("Error al cargar productos desde la base de datos", e);
         }
@@ -360,16 +364,16 @@ public class VentanaPrincipal extends JFrame {
             txtNombre.setText(modeloTabla.getValueAt(fila, 2).toString());
             cbCategoria.setSelectedItem(modeloTabla.getValueAt(fila, 3).toString());
 
-            // Formato precio
+            // Formato precio en Guaraníes (limpia prefijo Gs., puntos y espacios)
             String precioStr = modeloTabla.getValueAt(fila, 4).toString()
-                    .replace("$", "").replace(".", "").replace(",", ".").trim();
+                    .replace("Gs.", "").replace("₲", "").replace(".", "").replace(",", "").trim();
             txtPrecio.setText(precioStr);
 
             spStock.setValue(Integer.parseInt(modeloTabla.getValueAt(fila, 5).toString()));
             cbEstado.setSelectedItem(modeloTabla.getValueAt(fila, 6).toString());
 
             btnGuardar.setText("Modificar");
-            mostrarMensajeEstado("Producto seleccionado: " + txtCodigo.getText() + " - " + txtNombre.getText());
+            mostrarMensajeEstado("Producto seleccionado: Código " + txtCodigo.getText() + " - " + txtNombre.getText());
         }
     }
 
@@ -384,36 +388,45 @@ public class VentanaPrincipal extends JFrame {
         int stock = (Integer) spStock.getValue();
         String estado = (String) cbEstado.getSelectedItem();
 
-        // Validacion 1: Campos obligatorios (codigo y nombre)
+        // Validación 1: Campos obligatorios (código y nombre)
         if (codigo.isEmpty() || nombre.isEmpty()) {
             JOptionPane.showMessageDialog(this,
                     "El código y el nombre del producto son campos obligatorios.",
-                    "Dato Faltante", JOptionPane.WARNING_MESSAGE);
+                    "Dato faltante", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // Validacion 2: Precio debe ser valido y mayor a 0
+        // Validación 2: Código debe ser numérico únicamente
+        if (!codigo.matches("\\d+")) {
+            JOptionPane.showMessageDialog(this,
+                    "El código del producto debe contener únicamente números (ejemplo: 1001).",
+                    "Código inválido", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Validación 3: Precio debe ser válido y mayor a 0 (Formato Guaraníes Gs.)
         double precio;
         try {
-            precio = Double.parseDouble(precioText.replace(",", "."));
+            String pLimpio = precioText.replace("Gs.", "").replace("₲", "").replace(".", "").replace(",", "").trim();
+            precio = Double.parseDouble(pLimpio);
             if (precio <= 0) {
                 JOptionPane.showMessageDialog(this,
-                        "El precio del producto debe ser mayor a 0.",
-                        "Precio Inválido", JOptionPane.WARNING_MESSAGE);
+                        "El precio del producto debe ser mayor a 0 Gs.",
+                        "Precio inválido", JOptionPane.WARNING_MESSAGE);
                 return;
             }
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this,
-                    "Por favor ingrese un valor numérico válido para el precio.",
-                    "Precio Inválido", JOptionPane.WARNING_MESSAGE);
+                    "Por favor ingrese un valor numérico válido para el precio en Guaraníes (ejemplo: 50000).",
+                    "Precio inválido", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // Validacion 3: Stock >= 0
+        // Validación 4: Stock >= 0
         if (stock < 0) {
             JOptionPane.showMessageDialog(this,
                     "El stock no puede ser un número negativo.",
-                    "Stock Inválido", JOptionPane.WARNING_MESSAGE);
+                    "Stock inválido", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
@@ -423,11 +436,11 @@ public class VentanaPrincipal extends JFrame {
             if (esModificacion) {
                 int id = Integer.parseInt(txtId.getText());
 
-                // Verificar que no duplique el codigo de otro producto
+                // Verificar que no duplique el código de otro producto
                 if (productoDAO.existeCodigoDiferenteId(codigo, id)) {
                     JOptionPane.showMessageDialog(this,
                             "Ya existe otro producto registrado con el código '" + codigo + "'.",
-                            "Código Duplicado", JOptionPane.WARNING_MESSAGE);
+                            "Código duplicado", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 
@@ -440,11 +453,11 @@ public class VentanaPrincipal extends JFrame {
                     cargarDatosTabla();
                 }
             } else {
-                // Registro de Nuevo Producto: verificar codigo duplicado
+                // Registro de Nuevo Producto: verificar código duplicado
                 if (productoDAO.existeCodigo(codigo)) {
                     JOptionPane.showMessageDialog(this,
                             "Ya existe un producto registrado con el código '" + codigo + "'.",
-                            "Código Duplicado", JOptionPane.WARNING_MESSAGE);
+                            "Código duplicado", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 
@@ -464,7 +477,7 @@ public class VentanaPrincipal extends JFrame {
     }
 
     /**
-     * Elimina el producto seleccionado previa confirmacion del usuario.
+     * Elimina el producto seleccionado previa confirmación del usuario.
      */
     private void eliminarProducto() {
         if (txtId.getText().isEmpty()) {
@@ -479,7 +492,7 @@ public class VentanaPrincipal extends JFrame {
 
         int confirmacion = JOptionPane.showConfirmDialog(this,
                 "¿Está seguro de que desea eliminar el producto '" + nombre + "'?",
-                "Confirmar Eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+                "Confirmar eliminación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
         if (confirmacion == JOptionPane.YES_OPTION) {
             try {
@@ -497,7 +510,7 @@ public class VentanaPrincipal extends JFrame {
     }
 
     /**
-     * Busca productos filtrando por codigo o nombre.
+     * Busca productos filtrando por código o nombre.
      */
     private void buscarProductos() {
         String criterio = txtBuscar.getText().trim();
@@ -556,7 +569,7 @@ public class VentanaPrincipal extends JFrame {
             if (productoDAO.ajustarStock(id, nuevoStock)) {
                 cargarDatosTabla();
                 seleccionarFilaPorId(id);
-                mostrarMensajeEstado("Stock de producto ID " + id + " actualizado a " + nuevoStock + " unidades.");
+                mostrarMensajeEstado("Stock del producto ID " + id + " actualizado a " + nuevoStock + " unidades.");
             }
         } catch (SQLException e) {
             mostrarError("Error al ajustar el stock", e);
@@ -564,7 +577,7 @@ public class VentanaPrincipal extends JFrame {
     }
 
     /**
-     * Abre un dialogo emergente para establecer manualmente el stock.
+     * Abre un diálogo emergente para establecer manualmente el stock.
      */
     private void abrirDialogoAjustarStock() {
         int fila = tblProductos.getSelectedRow();
@@ -589,7 +602,7 @@ public class VentanaPrincipal extends JFrame {
                 if (nuevoStock < 0) {
                     JOptionPane.showMessageDialog(this,
                             "El stock no puede ser negativo.",
-                            "Stock Inválido", JOptionPane.WARNING_MESSAGE);
+                            "Stock inválido", JOptionPane.WARNING_MESSAGE);
                     return;
                 }
 
@@ -603,7 +616,7 @@ public class VentanaPrincipal extends JFrame {
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(this,
                         "Por favor ingrese un número entero válido.",
-                        "Valor Inválido", JOptionPane.WARNING_MESSAGE);
+                        "Valor inválido", JOptionPane.WARNING_MESSAGE);
             } catch (SQLException e) {
                 mostrarError("Error al actualizar el stock", e);
             }
@@ -625,7 +638,7 @@ public class VentanaPrincipal extends JFrame {
         btnGuardar.setText("Guardar");
         tblProductos.clearSelection();
         txtCodigo.requestFocus();
-        mostrarMensajeEstado("Formulario listo para nuevo registro.");
+        mostrarMensajeEstado("Formulario listo para registrar un nuevo producto.");
     }
 
     /**
