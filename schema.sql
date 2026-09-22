@@ -26,4 +26,14 @@ BEGIN
 END
 GO
 
--- La tabla inicia vacía para que el usuario pueda insertar sus propios productos
+-- Datos de prueba iniciales (Códigos numéricos y precios en Guaraníes Gs.)
+IF NOT EXISTS (SELECT * FROM productos WHERE codigo = '1001')
+BEGIN
+    INSERT INTO productos (codigo, nombre, categoria, precio, stock, estado) VALUES
+    ('1001', 'Laptop Lenovo IdeaPad', 'Electrónica', 4500000, 8, 'Activo'),
+    ('1002', 'Mouse Inalámbrico Logitech', 'Electrónica', 120000, 3, 'Activo'),
+    ('1003', 'Teclado Mecánico RGB', 'Electrónica', 350000, 2, 'Activo'),
+    ('1004', 'Silla Ergonómica Oficina', 'Hogar', 950000, 12, 'Activo'),
+    ('1005', 'Cafetera Express', 'Hogar', 680000, 4, 'Inactivo');
+END
+GO
