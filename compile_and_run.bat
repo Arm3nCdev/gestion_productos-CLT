@@ -1,18 +1,19 @@
 @echo off
-chcp 65001 > NUL
+chcp 65001 >nul 2>&1
 echo =========================================================
 echo  Compilando y ejecutando Gestion de Productos (Java Swing)
 echo =========================================================
 
-IF NOT EXIST bin (
+if not exist "bin" (
     mkdir bin
 )
 
-echo Compilando codigo fuente...
-javac -encoding UTF-8 -source 1.8 -target 1.8 -cp "lib/*" -d bin src/com/gestion/modelo/*.java src/com/gestion/config/*.java src/com/gestion/dao/*.java src/com/gestion/vista/*.java src/com/gestion/main/*.java
+echo Compilando codigo fuente Java...
+javac -encoding UTF-8 -cp "lib/*" -d bin src\com\gestion\modelo\*.java src\com\gestion\config\*.java src\com\gestion\dao\*.java src\com\gestion\vista\*.java src\com\gestion\main\*.java
 
-IF %ERRORLEVEL% NEQ 0 (
-    echo [ERROR] Fallo la compilacion. Por favor revisa que tengas Java JDK instalado.
+if %ERRORLEVEL% NEQ 0 (
+    echo.
+    echo [ERROR] Fallo la compilacion. Verifique que Java JDK este instalado.
     pause
     exit /b %ERRORLEVEL%
 )
