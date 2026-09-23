@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * Clase Data Access Object (DAO) para realizar operaciones CRUD
- * sobre la tabla 'productos' en la base de datos.
+ * sobre la tabla productos en la base de datos.
  */
 public class ProductoDAO {
 
@@ -128,7 +128,7 @@ public class ProductoDAO {
     }
 
     /**
-     * Obtiene los productos con stock inferior a un limite dado (ej. bajo stock).
+     * Obtiene los productos con stock inferior a un limite dado.
      */
     public List<Producto> listarBajoStock(int limite) throws SQLException {
         List<Producto> lista = new ArrayList<>();

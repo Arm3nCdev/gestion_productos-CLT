@@ -12,7 +12,6 @@ public class Producto {
     private int stock;
     private String estado;
 
-    // Constructor vacio
     public Producto() {
     }
 

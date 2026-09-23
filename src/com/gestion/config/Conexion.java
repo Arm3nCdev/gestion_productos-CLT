@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * Clase encargada de gestionar la conexion a la Base de Datos mediante JDBC.
+ * Clase encargada de gestionar la conexion a la Base de Datos mediante JDBC
  */
 public class Conexion {
 
