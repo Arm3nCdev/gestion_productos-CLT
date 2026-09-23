@@ -15,7 +15,6 @@ import java.util.List;
 
 /**
  * Pantalla Principal de la Aplicación "Gestión de productos".
- * Desarrollada en Java Swing para la prueba técnica de Desarrollador Java Jr.
  */
 public class VentanaPrincipal extends JFrame {
 
@@ -54,7 +53,7 @@ public class VentanaPrincipal extends JFrame {
     // Objeto DAO para persistencia
     private final ProductoDAO productoDAO;
 
-    // Formateador de moneda para Paraguay (Guaraníes - Gs.)
+
     private final DecimalFormat df = new DecimalFormat("'Gs.' #,##0");
 
     public VentanaPrincipal() {
@@ -77,18 +76,10 @@ public class VentanaPrincipal extends JFrame {
 
         // Header Panel (Título superior)
         JPanel headerPanel = new JPanel(new BorderLayout());
-        headerPanel.setBackground(new Color(33, 43, 54));
-        headerPanel.setBorder(new EmptyBorder(12, 15, 12, 15));
-
+        headerPanel.setBorder(new EmptyBorder(8, 10, 8, 10));
         JLabel lblTitulo = new JLabel("Gestión de productos");
-        lblTitulo.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        lblTitulo.setForeground(Color.WHITE);
+        lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 18));
         headerPanel.add(lblTitulo, BorderLayout.WEST);
-
-        JLabel lblSubtitulo = new JLabel("Prueba Técnica Java Jr");
-        lblSubtitulo.setFont(new Font("Segoe UI", Font.ITALIC, 13));
-        lblSubtitulo.setForeground(new Color(200, 210, 225));
-        headerPanel.add(lblSubtitulo, BorderLayout.EAST);
 
         mainPanel.add(headerPanel, BorderLayout.NORTH);
 
@@ -103,8 +94,6 @@ public class VentanaPrincipal extends JFrame {
         footerPanel.setBorder(new EmptyBorder(4, 8, 4, 8));
 
         lblEstadoMensaje = new JLabel("Listo.");
-        lblEstadoMensaje.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        lblEstadoMensaje.setForeground(new Color(70, 80, 95));
         footerPanel.add(lblEstadoMensaje, BorderLayout.WEST);
 
         mainPanel.add(footerPanel, BorderLayout.SOUTH);
@@ -116,9 +105,7 @@ public class VentanaPrincipal extends JFrame {
     private JPanel crearPanelFormulario() {
         JPanel panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), " Datos del producto ",
-                TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
-                new Font("Segoe UI", Font.BOLD, 14), new Color(33, 43, 54)
+                BorderFactory.createEtchedBorder(), " Datos del producto "
         ));
 
         JPanel formFields = new JPanel(new GridBagLayout());
@@ -192,16 +179,10 @@ public class VentanaPrincipal extends JFrame {
 
         btnGuardar = new JButton("Guardar");
         btnGuardar.setToolTipText("Guardar producto nuevo o actualizar seleccionado");
-        btnGuardar.setBackground(new Color(40, 167, 69));
-        btnGuardar.setForeground(Color.WHITE);
-        btnGuardar.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btnGuardar.addActionListener(e -> guardarProducto());
 
         btnEliminar = new JButton("Eliminar");
         btnEliminar.setToolTipText("Eliminar el producto seleccionado");
-        btnEliminar.setBackground(new Color(220, 53, 69));
-        btnEliminar.setForeground(Color.WHITE);
-        btnEliminar.setFont(new Font("Segoe UI", Font.BOLD, 12));
         btnEliminar.addActionListener(e -> eliminarProducto());
 
         panelBotones.add(btnNuevo);
@@ -219,9 +200,7 @@ public class VentanaPrincipal extends JFrame {
     private JPanel crearPanelTabla() {
         JPanel panel = new JPanel(new BorderLayout(8, 8));
         panel.setBorder(BorderFactory.createTitledBorder(
-                BorderFactory.createEtchedBorder(), " Listado de productos ",
-                TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION,
-                new Font("Segoe UI", Font.BOLD, 14), new Color(33, 43, 54)
+                BorderFactory.createEtchedBorder(), " Listado de productos "
         ));
 
         // Panel Superior de Búsqueda y Filtros
@@ -243,8 +222,6 @@ public class VentanaPrincipal extends JFrame {
 
         btnBajoStock = new JButton("Bajo stock (< 5)");
         btnBajoStock.setToolTipText("Mostrar únicamente productos con stock menor a 5 unidades");
-        btnBajoStock.setBackground(new Color(255, 193, 7));
-        btnBajoStock.setFont(new Font("Segoe UI", Font.BOLD, 11));
         btnBajoStock.addActionListener(e -> mostrarBajoStock());
 
         searchPanel.add(txtBuscar);
@@ -265,10 +242,7 @@ public class VentanaPrincipal extends JFrame {
 
         tblProductos = new JTable(modeloTabla);
         tblProductos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tblProductos.setRowHeight(24);
-        tblProductos.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-        tblProductos.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 12));
-        tblProductos.getTableHeader().setBackground(new Color(230, 235, 245));
+        tblProductos.setRowHeight(22);
 
         // Alineación y formato de celdas
         DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
@@ -373,7 +347,6 @@ public class VentanaPrincipal extends JFrame {
             cbEstado.setSelectedItem(modeloTabla.getValueAt(fila, 6).toString());
 
             btnGuardar.setText("Modificar");
-            mostrarMensajeEstado("Producto seleccionado: Código " + txtCodigo.getText() + " - " + txtNombre.getText());
         }
     }
 

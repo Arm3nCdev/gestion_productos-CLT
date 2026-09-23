@@ -4,7 +4,7 @@ Aplicación de escritorio desarrollada en **Java Swing** con persistencia en **B
 
 ---
 
-## 🚀 Requisitos e Instalación
+##  Requisitos e Instalación
 
 ### Requisitos Prerequisitos
 - **Java JDK 8** o superior (Probado en Java 8 / Java 11).
@@ -15,7 +15,7 @@ Aplicación de escritorio desarrollada en **Java Swing** con persistencia en **B
 
 ---
 
-## 🗄️ 1. Configuración de la Base de Datos
+## 1. Configuración de la Base de Datos
 
 ### Opción A: SQL Server 2022 (Configuración recomendada por defecto)
 1. Ejecuta el archivo `schema.sql` en tu instancia de SQL Server (vía SQL Server Management Studio o `sqlcmd`).
@@ -39,7 +39,7 @@ db.password=tu_contraseña
 
 ---
 
-## 🛠️ 2. Compilación y Ejecución
+##  2. Compilación y Ejecución
 
 ### En Windows (con un solo clic)
 Hacer doble clic sobre el archivo **`compile_and_run.bat`** o ejecutarlo desde la terminal:
@@ -62,7 +62,7 @@ java -cp "bin;lib\mssql-jdbc-12.4.2.jre8.jar;lib\mysql-connector-j-8.0.33.jar" c
 
 ---
 
-## 📂 3. Estructura del Proyecto
+##  3. Estructura del Proyecto
 
 ```
 Gestio de Productos CLT/
@@ -87,7 +87,7 @@ Gestio de Productos CLT/
 
 ---
 
-## ✅ 4. Casos de Uso y Funcionalidades Implementadas
+##  4. Casos de Uso y Funcionalidades Implementadas
 
 | Caso de Uso | Descripción en la Aplicación |
 | :--- | :--- |
@@ -102,7 +102,7 @@ Gestio de Productos CLT/
 
 ---
 
-## 🎯 5. Reglas de Negocio Enforzadas
+## 5. Reglas de Negocio Enforzadas
 - **Campos obligatorios:** Código y Nombre.
 - **Validación de Precio:** Debe ser estrictamente mayor a cero (`precio > 0`).
 - **Validación de Stock:** No se permiten valores negativos (`stock >= 0`).

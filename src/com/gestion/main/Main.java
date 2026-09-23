@@ -9,14 +9,23 @@ import javax.swing.*;
  */
 public class Main {
     public static void main(String[] args) {
-        // Establecer Look and Feel nativo del sistema operativo para una apariencia moderna y limpia
+        /* Configuración de Look and Feel estándar estilo NetBeans IDE 8.2 */
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception e) {
-            System.err.println("No se pudo aplicar el Look & Feel del sistema. Usando apariencia por defecto.");
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Exception e) {
+                System.err.println("No se pudo aplicar el Look & Feel.");
+            }
         }
 
-        // Iniciar la interfaz grafica en el hilo de eventos de Swing
+        // Iniciar la interfaz gráfica en el hilo de eventos de Swing
         SwingUtilities.invokeLater(() -> {
             VentanaPrincipal ventana = new VentanaPrincipal();
             ventana.setVisible(true);
